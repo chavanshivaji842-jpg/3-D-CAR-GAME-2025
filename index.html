@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ferrari 3D Car Racing Game</title>
+  <style>
+    body { margin: 0; overflow: hidden; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <script src="https://unpkg.com/three@0.164.1/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.164.1/examples/js/loaders/GLTFLoader.js"></script>
+  <script>
+    let scene = new THREE.Scene();
+    let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    let renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    let light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(10,10,10).normalize();
+    scene.add(light);
+
+    // Load Ferrari Model (Ferrari.glb file डालना होगा)
+    let loader = new THREE.GLTFLoader();
+    loader.load('Ferrari.glb', function(gltf){
+      let car = gltf.scene;
+      car.scale.set(0.5,0.5,0.5);
+      scene.add(car);
+    });
+
+    camera.position.z = 5;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
